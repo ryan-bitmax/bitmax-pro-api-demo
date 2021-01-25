@@ -77,7 +77,7 @@ class BitMaxCli:
         res = requests.get(url, params=params)
         return parse_response(res)
 
-    def query_pub_funding_rates(self, isApi=True, symbol='BTC-PERP', page=1, pageSize=20):
+    def query_pub_funding_rates(self, isApi=False, symbol='BTC-PERP', page=1, pageSize=20):
         url = f"{self.__host}/{ROUTE_PREFIX}/futures/funding-rates" if isApi \
             else f"{self.__host}/api/t/futures/funding-rates"
         params = dict(symbol=symbol,
@@ -220,4 +220,20 @@ class BitMaxCli:
         if asset: params['asset'] = asset
 
         res = requests.get(url, headers=headers, params=params)
+        return parse_response(res)
+
+    def query_future_position(self):
+        ts = utc_timestamp()
+        headers = make_auth_headers(ts, "futures/position", self.__apikey, self.__secret)
+        url = f"{self.__host}/{self.__group}/{FUTURE_ROUTE_PREFIX}/position"
+
+        res = requests.get(url, headers=headers)
+        return parse_response(res)
+
+    def query_future_risk(self):
+        ts = utc_timestamp()
+        headers = make_auth_headers(ts, "futures/risk", self.__apikey, self.__secret)
+        url = f"{self.__host}/{self.__group}/{FUTURE_ROUTE_PREFIX}/risk"
+
+        res = requests.get(url, headers=headers)
         return parse_response(res)

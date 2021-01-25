@@ -7,6 +7,7 @@ import random, string
 
 ROUTE_PREFIX = "api/pro/v1"
 ROUTE_PREFIX_V2 = "api/pro/v2"
+FUTURE_ROUTE_PREFIX = 'api/pro/futures'
 
 def check_sys_version():
     if not sys.version_info >= (3,5):
